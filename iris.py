@@ -9,6 +9,8 @@ import sklearn as sk
 from sklearn import svm
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
+from sklearn.inspection import DecisionBoundaryDisplay
+
 
 
 
@@ -62,7 +64,10 @@ x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 # transform(): uses previously fit data on the new set
 # use on test set to compare
-                                  
+x2_train = scaler.fit_transform(x2_train)
+x2_test = scaler.transform(x2_test)                                
+
+                                
 # we will do 2d analysis first
 for i, kernel in enumerate(kernel_functions):
   clf = svm.SVC(kernel=kernel)
@@ -74,4 +79,31 @@ for i, kernel in enumerate(kernel_functions):
   # calculates the accuracy based on the remaining testing data
   print(f'{kernel} {acc}')
   
+  # plt.subplot(2,2,i+1)
+  # makes a plot with 2x2 dimensions, we are modifying the (i+1)-th subplot
+  y_pred = clf.predict(x2_test)
+  # accuracy = clf.score(x2_test, y2_test)
+  # accuracy_score() can be used similarly for weighted acc, only for classification
+  # can be customized etc.
+
+  # Plot decision boundary and data points
+  plt.subplot(2, 2, i+1)
+  # sns.scatterplot(x=x2_train[:, 0], y=x2_train[:, 1], hue=y2_train, palette='Set2')
+  # map y2_train to a color palette
+  colors = {'Iris-setosa': 1, 'Iris-versicolor':2, 'Iris-virginica':3}
+  
+
+  # Put the result into a color plot
+  disp = DecisionBoundaryDisplay.from_estimator(clf, x2_train, response_method='predict', alpha=0.8)
+  # colors in the decision boundary
+  disp.ax_.scatter(x2_train[:, 0], x2_train[:, 1], c=y2_train.map(colors), cmap=plt.cm.coolwarm, edgecolor='k')
+  # map the colors to the training data and plots the points
+  plt.show()
+  
+  
+
+# plt.xlabel("Feature 1")
+# plt.ylabel("Feature 2")
+# plt.tight_layout()
+# plt.show()
   
