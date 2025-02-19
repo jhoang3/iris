@@ -9,7 +9,7 @@ import sklearn as sk
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score, KFold, StratifiedKFold
-# from sklearn.inspection import DecisionBoundaryDisplay
+from sklearn.inspection import DecisionBoundaryDisplay
 # from sklearn import datasets
 
 
@@ -109,9 +109,9 @@ for i, kernel in enumerate(kernel_functions):
   # map y2_train to a color palette
   # colors = {'Iris-setosa': 1, 'Iris-versicolor':2, 'Iris-virginica':3}
   # # Put the result into a color plot
-  # disp = DecisionBoundaryDisplay.from_estimator(clf, x2_train, response_method='predict', alpha=0.8)
+  disp = DecisionBoundaryDisplay.from_estimator(clf, x2_train, response_method='predict', alpha=0.8)
   # # colors in the decision boundary
-  # disp.ax_.scatter(x2_train[:, 0], x2_train[:, 1], c=y2_train.map(colors), cmap=plt.cm.coolwarm, edgecolor='k')
+  disp.ax_.scatter(x2_train[:, 0], x2_train[:, 1], c=y2_train.map(colors), cmap=plt.cm.coolwarm, edgecolor='k')
   # # map the colors to the training data and plots the points
   # plt.show()
   
@@ -120,5 +120,5 @@ for i, kernel in enumerate(kernel_functions):
 # plt.xlabel("Feature 1")
 # plt.ylabel("Feature 2")
 # plt.tight_layout()
-# plt.show()
+plt.show()
   
